@@ -37,6 +37,7 @@ logger.addHandler(handler)
 channel_name = 'Vorterix'
 channel_id = 'UCvCTWHCbBC0b9UIeLeNs8ug'
 video_text = '#ParenLaMano'
+cfg_dir = 'plm_id.cfg'
 
 
 def buscar_video():
@@ -95,7 +96,7 @@ def leer_ultimo_id():
 
 def escribir_ultimo_id(nuevo_id):
     # abrir el archivo de configuración en modo escritura
-    with open('plm_id.cfg', 'w') as f:
+    with open(cfg_dir, 'w') as f:
         # escribir el nuevo id en el archivo
         f.write(nuevo_id)
 
