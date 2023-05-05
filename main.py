@@ -117,7 +117,12 @@ async def main():
         # Leo y almaceno último id de video
         id_actual = leer_ultimo_id()
         fecha_actual = datetime.now().strftime("%d/%m/%Y")
+        dia_actual = datetime.today().weekday()
 
+        if dia_actual == 5 or dia_actual == 6:
+            break
+
+        # me fijo si el id es nuevo
         if video_id != id_actual:
             await enviar_mensaje(datos)
             logger.info('Se encontro NUEVO video: ' + datos[0] + ', subido el dia: ' + datos[1] + ' a las: ' + datos[
