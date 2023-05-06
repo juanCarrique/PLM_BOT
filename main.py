@@ -36,7 +36,7 @@ logger.addHandler(handler)
 # Datos que quiero buscar
 channel_name = 'Vorterix'
 channel_id = 'UCvCTWHCbBC0b9UIeLeNs8ug'
-video_text = '#ParenLaMano'
+video_text = '#ParenLaMano COMPLETO'
 cfg_dir = 'plm_id.cfg'
 
 
@@ -112,15 +112,21 @@ async def enviar_mensaje(datos):
 
 async def main():
     while True:
+
+        dia_actual = datetime.today().weekday()
+        if dia_actual == 5 or dia_actual == 6:
+            if dia_actual == 5:
+                logger.info('Es sábado hoy no se sube PLM')
+            else:
+                logger.info('Es domingo hoy no se sube PLM')
+
+            break
+
         video_id = buscar_video()
         datos = datos_video(video_id)
         # Leo y almaceno último id de video
         id_actual = leer_ultimo_id()
         fecha_actual = datetime.now().strftime("%d/%m/%Y")
-        dia_actual = datetime.today().weekday()
-
-        if dia_actual == 5 or dia_actual == 6:
-            break
 
         # me fijo si el id es nuevo
         if video_id != id_actual:
