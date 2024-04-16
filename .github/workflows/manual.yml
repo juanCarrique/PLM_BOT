@@ -45,4 +45,6 @@ jobs:
 
     - name: push changes
       run: |
-        git push
+        git push https://$GH_TOKEN@github.com/juanCarrique/PLM_BOT.git
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
