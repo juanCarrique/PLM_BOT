@@ -32,12 +32,13 @@ jobs:
         DEVELOPER_KEY: ${{ secrets.DEVELOPER_KEY }}
         TLG_TOKEN: ${{ secrets.TLG_TOKEN }}
         CHAT_ID: ${{ secrets.CHAT_ID }}
-        
-    - name: Commit changelog and manifest files
-      id: make-commit
+      
+    - name: Set up Git
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+
+    - name: Commit changes
       run: |
         git add plm_id.cfg
-        git commit --message "add new video_id"
-    
-    - name: Push
-      run: git push 
+        git commit -m "Update plm_id.cfg"
