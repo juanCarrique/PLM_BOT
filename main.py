@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.DEBUG)
 # DATOS GLOBALES
 api_service_name = "youtube"
 api_version = "v3"
-DEVELOPER_KEY = os.environ.get('DEVELOPER_KEY')
+DEVELOPER_KEY = os.environ.get('API_KEY')
 youtube = build(api_service_name, api_version, developerKey=DEVELOPER_KEY)
 # Token de acceso telegram
 TOKEN = os.environ.get('TLG_TOKEN')
