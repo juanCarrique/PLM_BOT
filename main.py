@@ -21,7 +21,7 @@ with open(credentials_file, 'w') as f:
     f.write(os.getenv('CREDENTIALS_FILE'))
 credentials = Credentials.from_service_account_file(credentials_file)
 # Construir el servicio de YouTube con las credenciales cargadas
-youtube = build(api_service_name, api_version, credentials=credentials)
+youtube = build(api_service_name, api_version, credentials=Credentials.from_service_account_file(credentials_file))
 # Token de acceso telegram
 TOKEN = os.environ.get('TLG_TOKEN')
 # Crea un objeto de tipo Bot
