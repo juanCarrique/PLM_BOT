@@ -2,7 +2,7 @@ import asyncio
 import pytz
 from datetime import datetime
 import telegram
-from google.auth import Credentials
+from google.auth.credentials import Credentials
 from googleapiclient.discovery import build
 import time
 import logging
