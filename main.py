@@ -2,7 +2,7 @@ import asyncio
 import pytz
 from datetime import datetime
 import telegram
-from google.auth.credentials import Credentials
+from google.auth import credentials
 from googleapiclient.discovery import build
 import time
 import logging
@@ -18,7 +18,7 @@ api_version = "v3"
 # Leer las credenciales del secreto como una variable de entorno
 credentials_json = os.environ.get('CREDENTIALS_FILE')
 # Cargar las credenciales desde el JSON
-credentials = Credentials.from_service_account_file(json.loads(credentials_json))
+credentials = credentials.from_service_account_file(json.loads(credentials_json))
 # Construir el servicio de YouTube con las credenciales cargadas
 youtube = build(api_service_name, api_version, credentials=credentials)
 # Token de acceso telegram
