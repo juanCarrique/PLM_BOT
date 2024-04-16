@@ -2,12 +2,10 @@ import asyncio
 import pytz
 from datetime import datetime
 import telegram
-from google.auth import credentials
 from googleapiclient.discovery import build
 import time
 import logging
 import os
-import json
 
 # Configurar el nivel de registro del logger
 logging.basicConfig(level=logging.DEBUG)
@@ -15,12 +13,8 @@ logging.basicConfig(level=logging.DEBUG)
 # DATOS GLOBALES
 api_service_name = "youtube"
 api_version = "v3"
-# Leer las credenciales del secreto como una variable de entorno
-credentials_json = os.environ.get('CREDENTIALS_FILE')
-# Cargar las credenciales desde el JSON
-credentials = credentials.from_service_account_file(json.loads(credentials_json))
-# Construir el servicio de YouTube con las credenciales cargadas
-youtube = build(api_service_name, api_version, credentials=credentials)
+DEVELOPER_KEY = os.environ.get('DEVELOPER_KEY')
+youtube = build(api_service_name, api_version, developerKey=DEVELOPER_KEY)
 # Token de acceso telegram
 TOKEN = os.environ.get('TLG_TOKEN')
 # Crea un objeto de tipo Bot
