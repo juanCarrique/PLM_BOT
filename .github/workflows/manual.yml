@@ -23,8 +23,7 @@ jobs:
 
     - name: Copy credentials file
       run: |
-        mkdir -p $HOME/.credentials/
-        cp credentials/credentials.json $HOME/.credentials/
+        echo "${{ secrets.CREDENTIALS_FILE }}" > $HOME/.credentials/credentials.json
       env:
         CREDENTIALS_FILE: ${{ secrets.CREDENTIALS_FILE }}
 
