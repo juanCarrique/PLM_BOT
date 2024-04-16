@@ -42,3 +42,7 @@ jobs:
       run: |
         git add plm_id.cfg
         git commit -m "Update plm_id.cfg"
+
+    - name: push changes
+      run: |
+        git push
