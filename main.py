@@ -14,14 +14,10 @@ logging.basicConfig(level=logging.DEBUG)
 # DATOS GLOBALES
 api_service_name = "youtube"
 api_version = "v3"
-# Ruta al archivo JSON de credenciales
-credentials_file = os.path.expanduser("~/.credentials/credentials.json")
-# Carga las credenciales de servicio desde el archivo JSON
-with open(credentials_file, 'w') as f:
-    f.write(os.getenv('CREDENTIALS_FILE'))
-credentials = Credentials.from_service_account_file(credentials_file)
+# Leer las credenciales del secreto como una variable de entorno
+credentials_json = os.environ.get('CREDENTIALS_FILE')
 # Construir el servicio de YouTube con las credenciales cargadas
-youtube = build(api_service_name, api_version, credentials=Credentials.from_service_account_file(credentials_file))
+youtube = build(api_service_name, api_version, credentials=Credentials.from_service_account_info(credentials_json))
 # Token de acceso telegram
 TOKEN = os.environ.get('TLG_TOKEN')
 # Crea un objeto de tipo Bot
