@@ -1,4 +1,4 @@
-name: Run Python Program
+name: Run PLM_BOT
 
 on:
   schedule:
