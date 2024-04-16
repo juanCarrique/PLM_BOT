@@ -1,4 +1,4 @@
-name: Run PLM_BOT
+name: Run test->PLM_BOT
 
 on:
   schedule:
