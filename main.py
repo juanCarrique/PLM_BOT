@@ -17,6 +17,8 @@ api_version = "v3"
 # Ruta al archivo JSON de credenciales
 credentials_file = os.path.expanduser("~/.credentials/credentials.json")
 # Carga las credenciales de servicio desde el archivo JSON
+with open(credentials_file, 'w') as f:
+    f.write(os.getenv('CREDENTIALS_FILE'))
 credentials = Credentials.from_service_account_file(credentials_file)
 # Construir el servicio de YouTube con las credenciales cargadas
 youtube = build(api_service_name, api_version, credentials=credentials)
