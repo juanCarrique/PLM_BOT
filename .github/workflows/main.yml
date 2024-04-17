@@ -2,7 +2,7 @@ name: Run PLM_BOT
 
 on:
   schedule:
-    - cron: '20 00 * * 1-5' 
+    - cron: '00 00 * * 1-5' 
 
 jobs:
   run_python:
