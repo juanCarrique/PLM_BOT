@@ -2,10 +2,6 @@ name: Manual Workflow
 
 on:
   workflow_dispatch:
-    inputs:
-      message:
-        description: 'Mensaje opcional para la ejecución del flujo de trabajo'
-        required: false
 
 jobs:
   run_python:
