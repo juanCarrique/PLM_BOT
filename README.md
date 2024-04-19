@@ -1,5 +1,5 @@
 # PLM_BOT
-_¿Cansado de tener que adivinar cúando se subió el último programa de Paren La Mano al canal de Vorterix?  
+_¿Cansado de tener que adivinar cuándo se subió el último programa de Paren La Mano al canal de Vorterix?  
 ¿Querés que te llegue una notificación cuando se subió el video, pero no quéres que te lleguen notificaciones del resto de programas del canal?_
 
 ¡La solución está acá!
@@ -15,7 +15,7 @@ Un script se ejecuta diariamente a partir de las 21:00 hrs Argentina (00:00 UTC)
 
 ---
 ### Notas
-* Por ahora el bot solo envia mensajes a una persona, a mi :D
-* Actualmente la ejecución programada esta hecha via Github Actions, y como bien lo aclaran en la documentacion se puede atrasar el horario de ejecucion, posibles soluciones:
-  * Atrasar aun más el inicio de la ejecucion del script -> gastaria mas credios de la API :c
-  * Usar programas externos a GitHub para programar la ejecución -> use python anywhere pero en su plan gratuito había que revalidar la programación cada 30 días.   
+* Por ahora el bot solo envía mensajes a una persona, a mi :D
+* Actualmente la ejecución programada esta hecha via Github Actions, y como bien lo aclaran en la documentación se puede atrasar el horario de ejecución, posibles soluciones:
+  * Atrasar aun más el inicio de la ejecución del script, para que esté corriendo lo antes posible-> gastaría más créditos de la API :c
+  * Usar programas externos a GitHub para programar la ejecución -> usé [PythonAnywhere](https://www.pythonanywhere.com "Página de PythonAnywhere") pero en su plan gratuito había que revalidar la programación de la ejecución cada 30 días.   
