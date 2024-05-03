@@ -38,6 +38,7 @@ logger.addHandler(handler)
 channel_name = 'Vorterix'
 channel_id = 'UCvCTWHCbBC0b9UIeLeNs8ug'
 video_text = '#ParenLaMano COMPLETO'
+video_text2 = '#ParenLaMano | COMPLETO'
 cfg_dir = 'plm_id.cfg'
 
 
@@ -59,7 +60,7 @@ def buscar_video(id_actual):
 
     for playlist_item in playlist_items_response['items']:
         video_title = playlist_item['snippet']['title']
-        if video_text.lower() in video_title.lower():
+        if (video_text.lower() in video_title.lower()) or (video_text2.lower() in video_title.lower()):
             video_id = playlist_item['snippet']['resourceId']['videoId']
             break
 
