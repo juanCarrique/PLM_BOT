@@ -125,7 +125,7 @@ async def main():
             else:
                 logger.info('Es domingo hoy no se sube PLM')
 
-            break
+        #     break
 
          # Leo y almaceno último id de video
         id_actual = leer_ultimo_id()
@@ -144,7 +144,7 @@ async def main():
             escribir_ultimo_id(video_id)
             break
         else:
-            if fecha_actual == datos[1]:
+            if fecha_actual == datos[1] and datos[2] >= '03:00':
                 logger.info('Ya se encontro el video de hoy')
                 break
             else:
