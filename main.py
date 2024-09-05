@@ -131,13 +131,13 @@ async def main():
         id_actual = leer_ultimo_id()
 
         video_id = buscar_video(id_actual)
-        datos = datos_video(video_id)
 
         fecha_actual = datetime.now().astimezone(local_timezone).strftime("%d/%m/%Y")
         hora_actual = datetime.now().astimezone(local_timezone).strftime('%H:%M')
 
         # me fijo si el id es nuevo
         if video_id != id_actual:
+            datos = datos_video(video_id)
             await enviar_mensaje(datos)
             logger.info('Se encontro NUEVO video: ' + datos[0] + ', subido el dia: ' + datos[1] + ' a las: ' + datos[
                 2] + ', la URL es: ' + datos[3] + ' y el id es: ' + video_id)
