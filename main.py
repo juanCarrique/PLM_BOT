@@ -42,7 +42,7 @@ video_text2 = 'COMPLETO'
 cfg_dir = 'plm_id.cfg'
 
 
-def buscar_ultimo_videoId():
+def buscar_ultimo_videoId(id_actual):
     try:
         playlist_response = youtube.channels().list(
             part='contentDetails',
@@ -57,7 +57,7 @@ def buscar_ultimo_videoId():
             maxResults=7
         ).execute()
 
-        video_id = None
+        video_id = id_actual
 
         for playlist_item in playlist_items_response['items']:
             video_title = playlist_item['snippet']['title']
@@ -134,7 +134,7 @@ async def main():
         # Leo y almaceno último id de video
         id_actual = leer_ultimo_id()
 
-        video_id = buscar_ultimo_videoId()
+        video_id = buscar_ultimo_videoId(id_actual)
 
         if video_id is None:
             logger.warning('No se encontró ningún video.')
