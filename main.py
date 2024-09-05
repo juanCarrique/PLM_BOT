@@ -43,28 +43,33 @@ cfg_dir = 'plm_id.cfg'
 
 
 def buscar_ultimo_videoId():
-    playlist_response = youtube.channels().list(
-        part='contentDetails',
-        id=channel_id
-    ).execute()
+    try:
+        playlist_response = youtube.channels().list(
+            part='contentDetails',
+            id=channel_id
+        ).execute()
 
-    playlist_id = playlist_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+        playlist_id = playlist_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
 
-    playlist_items_response = youtube.playlistItems().list(
-        part='id,snippet',
-        playlistId=playlist_id,
-        maxResults=7
-    ).execute()
+        playlist_items_response = youtube.playlistItems().list(
+            part='id,snippet',
+            playlistId=playlist_id,
+            maxResults=7
+        ).execute()
 
-    video_id = None
+        video_id = None
 
-    for playlist_item in playlist_items_response['items']:
-        video_title = playlist_item['snippet']['title']
-        if (video_text.lower() in video_title.lower()) and (video_text2.lower() in video_title.lower()):
-            video_id = playlist_item['snippet']['resourceId']['videoId']
-            break
+        for playlist_item in playlist_items_response['items']:
+            video_title = playlist_item['snippet']['title']
+            if (video_text.lower() in video_title.lower()) and (video_text2.lower() in video_title.lower()):
+                video_id = playlist_item['snippet']['resourceId']['videoId']
+                break
 
-    return video_id
+        return video_id
+
+    except Exception as e:
+        logger.error(f'Error al buscar el último video: {e}')
+        return None
 
 
 def datos_video(id_video):
@@ -119,44 +124,51 @@ async def enviar_mensaje(datos):
 
 async def main():
     while True:
-
-        # me fijo que no sea fin de semana
+        # Me fijo que no sea fin de semana
         dia_actual = datetime.today().astimezone(local_timezone).weekday()
-        if dia_actual == 5 or dia_actual == 6:
-            if dia_actual == 5:
-                logger.info('Es sábado hoy no se sube PLM')
-            else:
-                logger.info('Es domingo hoy no se sube PLM')
+        if dia_actual in [5, 6]:
+            logger.info(f'Es {"sábado" if dia_actual == 5 else "domingo"} hoy no se sube PLM')
+            await asyncio.sleep(30)
+            continue  # No procesar si es fin de semana
 
-        #     break
-
-         # Leo y almaceno último id de video
+        # Leo y almaceno último id de video
         id_actual = leer_ultimo_id()
 
         video_id = buscar_ultimo_videoId()
+
+        if video_id is None:
+            logger.warning('No se encontró ningún video.')
+            await asyncio.sleep(30)
+            continue
+
         datos = datos_video(video_id)
+
+        if datos is None:
+            logger.warning('No se pudieron obtener los datos del video.')
+            await asyncio.sleep(30)
+            continue
 
         fecha_actual = datetime.now().astimezone(local_timezone).strftime("%d/%m/%Y")
         hora_actual = datetime.now().astimezone(local_timezone).strftime('%H:%M')
 
-        # me fijo si el id es nuevo
+        # Me fijo si el id es nuevo
         if video_id != id_actual:
             await enviar_mensaje(datos)
-            logger.info('Se encontro NUEVO video: ' + datos[0] + ', subido el dia: ' + datos[1] + ' a las: ' + datos[
-                2] + ', la URL es: ' + datos[3] + ' y el id es: ' + video_id)
+            logger.info(f'Se encontró NUEVO video: {datos[0]}, subido el día: {datos[1]} a las: {datos[2]}, la URL es: {datos[3]} y el id es: {video_id}')
             escribir_ultimo_id(video_id)
             break
         else:
             if fecha_actual == datos[1] and datos[2] >= '03:00':
-                logger.info('Ya se encontro el video de hoy')
+                logger.info('Ya se encontró el video de hoy')
                 break
             else:
-                # si ya son la 1 am corto el programa
+                # Si ya son la 1 am corto el programa
                 if hora_actual == '01':
-                    logger.info('No se encontro programa nuevo')
+                    logger.info('No se encontró programa nuevo')
                     break
 
-        time.sleep(30)
+        await asyncio.sleep(30)
+
 
 
 asyncio.run(main())
