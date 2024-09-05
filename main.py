@@ -42,7 +42,7 @@ video_text2 = 'COMPLETO'
 cfg_dir = 'plm_id.cfg'
 
 
-def buscar_video(id_actual):
+def buscar_ultimo_videoId():
     playlist_response = youtube.channels().list(
         part='contentDetails',
         id=channel_id
@@ -56,7 +56,7 @@ def buscar_video(id_actual):
         maxResults=7
     ).execute()
 
-    video_id = id_actual
+    video_id = None
 
     for playlist_item in playlist_items_response['items']:
         video_title = playlist_item['snippet']['title']
@@ -72,6 +72,9 @@ def datos_video(id_video):
         id=id_video,
         part='snippet'
     ).execute()
+
+    if not video_result['items']:
+        return None
 
     video_title = video_result['items'][0]['snippet']['title']
     video_published_at = video_result['items'][0]['snippet']['publishedAt']
@@ -130,14 +133,14 @@ async def main():
          # Leo y almaceno último id de video
         id_actual = leer_ultimo_id()
 
-        video_id = buscar_video(id_actual)
+        video_id = buscar_ultimo_videoId()
+        datos = datos_video(video_id)
 
         fecha_actual = datetime.now().astimezone(local_timezone).strftime("%d/%m/%Y")
         hora_actual = datetime.now().astimezone(local_timezone).strftime('%H:%M')
 
         # me fijo si el id es nuevo
         if video_id != id_actual:
-            datos = datos_video(video_id)
             await enviar_mensaje(datos)
             logger.info('Se encontro NUEVO video: ' + datos[0] + ', subido el dia: ' + datos[1] + ' a las: ' + datos[
                 2] + ', la URL es: ' + datos[3] + ' y el id es: ' + video_id)
